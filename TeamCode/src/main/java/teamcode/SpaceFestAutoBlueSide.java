@@ -1,10 +1,11 @@
 package teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-
+@Disabled
 @Autonomous(name="SpaceFestAutoBlueSide", group="LinearOpMode")
 public class SpaceFestAutoBlueSide extends LinearOpMode {
 

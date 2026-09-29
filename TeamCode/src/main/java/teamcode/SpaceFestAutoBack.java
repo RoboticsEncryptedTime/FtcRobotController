@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 
-
+@Disabled
 @Autonomous(name="SpaceFestAutoBack", group="LinearOpMode")
 public class SpaceFestAutoBack extends LinearOpMode {
 
