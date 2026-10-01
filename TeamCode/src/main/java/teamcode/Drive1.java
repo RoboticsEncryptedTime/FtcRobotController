@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.internal.camera.delegating.DelegatingCaptureSequence;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+
+import teamcode.mechanisms.AprilTagWebcam;
 
 @TeleOp(name = "Drive1", group = "Controlled")
 public class Drive1 extends OpMode {
@@ -22,6 +25,7 @@ public class Drive1 extends OpMode {
 
     boolean launch;
     boolean run;
+    private boolean AprilTagDetection;
 
 
     public void init() {
@@ -155,6 +159,28 @@ public class Drive1 extends OpMode {
             intakeMotor.setPower(intakeMotor.getPower() == 0 ? 0.9: 0);
             midtakeMotor.setPower(midtakeMotor.getPower() == 0 ? 0.6: 0);
         }
+        //april tag stuff
+        AprilTagWebcam aprilTagWebcam = new AprilTagWebcam();
+            aprilTagWebcam.update();
+
+            //red april tag ids
+            int [] tagIdR = {0,1,2,3};
+            //blue april tag ids
+            int [] tagIdB = {38,39,40,41};
+        //simplifying Blue Ids
+        AprilTagDetection id42;// = aprilTagWebcam.getTagBySpecificId(41);
+        AprilTagDetection id43;// = aprilTagWebcam.getTagBySpecificId(40);
+        AprilTagDetection id44;// = aprilTagWebcam.getTagBySpecificId(39);
+        AprilTagDetection id45;// = aprilTagWebcam.getTagBySpecificId(38);
+        //Simplifying red Ids
+        AprilTagDetection id0;// = aprilTagWebcam.getTagBySpecificId(0);
+        AprilTagDetection id1;// = aprilTagWebcam.getTagBySpecificId(1);
+        AprilTagDetection id2;// = aprilTagWebcam.getTagBySpecificId(2);
+        AprilTagDetection id3;
+        if (AprilTagDetection) id3 = aprilTagWebcam.getTagBySpecificId(3);{
+
+        }
+
 
         //Perform reverse intake for robot
         if (gamepad2.bWasPressed()) {
@@ -164,46 +190,46 @@ public class Drive1 extends OpMode {
     }
 }
 
-//        if (gamepad2.xWasPressed()) {
-//            ArmServ.setPosition(0.5);        }
-//
-//        if (gamepad2.aWasPressed()) {
-//            ArmServ.setPosition(0.0);
-//        }
+/*        if (gamepad2.xWasPressed()) {
+            ArmServ.setPosition(0.5);        }
+
+        if (gamepad2.aWasPressed()) {
+            ArmServ.setPosition(0.0);
+        }
 
 
 
-        //bind the midtake motor to a button
+        bind the midtake motor to a button
 
-        //Test if the first test does not work
-//        XrailL.setPower(gamepad2.left_stick_y * xrailspeed);
-//        XrailR.setPower(gamepad2.left_stick_y * xrailspeed);
+        Test if the first test does not work
+        XrailL.setPower(gamepad2.left_stick_y * xrailspeed);
+       XrailR.setPower(gamepad2.left_stick_y * xrailspeed);
 
 
         //Claw UP and Down
-//        if (gamepad2.a) {
-//            ClawUp();
-//        }
-//
-//        if (gamepad2.b){
-//            ClawMiddle();
-//        }
-//        if (gamepad2.y){
-//            ClawDown();
-//        }
-//
-//        //OPEN/CLOSE Claw
-//        if (gamepad2.right_bumper) {
-//            CloseClawR();
-//            CloseClawL();
-//        } else {
-//            OpenClawR();
-//            OpenClawL();
-//        }
+        if (gamepad2.a) {
+            ClawUp();
+        }
 
-//        if (gamepad1.b){
-//            sushang();
-//        }
+        if (gamepad2.b){
+            ClawMiddle();
+        }
+        if (gamepad2.y){
+            ClawDown();
+        }
+
+        //OPEN/CLOSE Claw
+        if (gamepad2.right_bumper) {
+            CloseClawR();
+            CloseClawL();
+        } else {
+            OpenClawR();
+           OpenClawL();
+        }
+
+       if (gamepad1.b){
+            sushang();
+        }
 
 
         //Drone Shooter
@@ -213,46 +239,48 @@ public class Drive1 extends OpMode {
 
 
         //MIGHT NOT WORK
-//    static void Push() {
-//        ArmServ.setPosition(0.5);
-//    }
-//
-//    static void Pull() {
-//        ArmServ.setPosition(0.0);
-//   }
+    static void Push() {
+        ArmServ.setPosition(0.5);
+    }
 
-//    //DONE
-//    static void CloseClawR(){
-//        LeftClaw.setPosition(0.05);
-//    }
-//
-//    static void OpenClawL() {
-//        RightClaw.setPosition(.2);
-//    }
-//    //DONE
-//    static void OpenClawR(){
-//        LeftClaw.setPosition(.25);
-//    }
-//
-//    static void ClawMiddle(){
-//        RightUp.setPosition(.45);
-//}
-//
-//
-//    static void ClawUp() {
-//        RightUp.setPosition(.78);}
-//
-//    static void ClawDown() {
-//        RightUp.setPosition(0.12);
-//    }
-//    static void ClawUpint() {
-//        RightUp.setPosition(0.12);
-//    }
-//
-//    static void susint(){
-//        sus.setPosition(0);
-//    }
-//    static void sushang(){
-//        sus.setPosition(.85);
-//    }
+    static void Pull() {
+        ArmServ.setPosition(0.0);
+   }
+
+    //DONE
+    static void CloseClawR(){
+       LeftClaw.setPosition(0.05);
+    }
+
+    static void OpenClawL() {
+        RightClaw.setPosition(.2);
+    }
+    //DONE
+    static void OpenClawR(){
+        LeftClaw.setPosition(.25);
+    }
+
+    static void ClawMiddle(){
+       RightUp.setPosition(.45);
+}
+
+
+    static void ClawUp() {
+        RightUp.setPosition(.78);}
+
+   static void ClawDown() {
+       RightUp.setPosition(0.12);
+    }
+    static void ClawUpint() {
+       RightUp.setPosition(0.12);
+    }
+
+    static void susint(){
+        sus.setPosition(0);
+    }
+   static void sushang(){
+        sus.setPosition(.85);
+    }
+
+ */
 
