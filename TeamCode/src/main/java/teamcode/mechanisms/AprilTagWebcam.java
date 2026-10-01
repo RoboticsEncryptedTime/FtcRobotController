@@ -54,7 +54,7 @@ public class AprilTagWebcam {
         return detectedTags;
     }
 
-    public void displayDetectionTelemetry(AprilTagDetection detectedId){
+    public void displayDetectionTelemetry(){
         if(detectedId == null){
             return;
         }

@@ -166,21 +166,25 @@ public class Drive1 extends OpMode {
             //red april tag ids
             int [] tagIdR = {0,1,2,3};
             //blue april tag ids
-            int [] tagIdB = {38,39,40,41};
-        //simplifying Blue Ids
-        AprilTagDetection id42;// = aprilTagWebcam.getTagBySpecificId(41);
-        AprilTagDetection id43;// = aprilTagWebcam.getTagBySpecificId(40);
-        AprilTagDetection id44;// = aprilTagWebcam.getTagBySpecificId(39);
-        AprilTagDetection id45;// = aprilTagWebcam.getTagBySpecificId(38);
+            int [] tagIdB = {42,33,44,45};
+        //actually not quite sure what this does, but it might be needed
+        AprilTagDetection id42 = aprilTagWebcam.getTagBySpecificId(41);
+        AprilTagDetection id43 = aprilTagWebcam.getTagBySpecificId(40);
+        AprilTagDetection id44 = aprilTagWebcam.getTagBySpecificId(39);
+        AprilTagDetection id45 = aprilTagWebcam.getTagBySpecificId(38);
         //Simplifying red Ids
-        AprilTagDetection id0;// = aprilTagWebcam.getTagBySpecificId(0);
-        AprilTagDetection id1;// = aprilTagWebcam.getTagBySpecificId(1);
-        AprilTagDetection id2;// = aprilTagWebcam.getTagBySpecificId(2);
-        AprilTagDetection id3;
-        if (AprilTagDetection) id3 = aprilTagWebcam.getTagBySpecificId(3);{
+        AprilTagDetection id0 = aprilTagWebcam.getTagBySpecificId(0);
+        AprilTagDetection id1 = aprilTagWebcam.getTagBySpecificId(1);
+        AprilTagDetection id2 = aprilTagWebcam.getTagBySpecificId(2);
+        AprilTagDetection id3 = aprilTagWebcam.getTagBySpecificId(3);
 
+        while (aprilTagWebcam.getDetectedTags() == null) {
+           //not coding until we figure out motor or servo
+           // put code to spin
         }
-
+        if (  aprilTagWebcam.getDetectedTags().contains(id3) ){
+            //put code to stop motor
+    }
 
         //Perform reverse intake for robot
         if (gamepad2.bWasPressed()) {
