@@ -232,13 +232,13 @@ public class Drive1 extends OpMode {
 
 
         while (aprilTagWebcam.getDetectedTags() == null && autoenabler) {
-            autoTurret.setPosition(Servo_Position);
-            if ((ldtr) || (lddr))
-            {
+            if ((ldtr) || (lddr)) {
                 Servo_Position -= 5;
             }
-            if ((ldtl) || (lddl)){
+            if ((ldtl) || (lddl)) {
                 Servo_Position += 5;
+            }
+            autoTurret.setPosition(Servo_Position);
         }
 
 
@@ -268,7 +268,6 @@ public class Drive1 extends OpMode {
             }
         }
     }
-}
 
 /*        if (gamepad2.xWasPressed()) {
             ArmServ.setPosition(0.5);        }
