@@ -2,6 +2,7 @@ package teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -15,7 +16,7 @@ import teamcode.mechanisms.AprilTagWebcam;
 public class Drive1 extends OpMode {
 
     DcMotorEx FLmotor, FRmotor, BLmotor, BRmotor, TopLauncherMotor, BottomLauncherMotor, intakeMotor, midtakeMotor;
-    static Servo ArmServ;
+    static Servo autoTurret;
     double Servo_Position = 0.0;
     private DcMotorEx XrailL, XrailR;
     double TurnSpeed = -0.8;
@@ -66,7 +67,7 @@ public class Drive1 extends OpMode {
 
 
         //getting servos
-        ArmServ = hardwareMap.get(Servo.class, "ArmServo");
+        autoTurret = hardwareMap.get(Servo.class, "autoTurret");
 //        LeftClaw = hardwareMap.servo.get("LeftClaw");
 //        LeftUp = hardwareMap.servo.get("LeftUp");
 //        RightUp = hardwareMap.servo.get("RightUp");
@@ -159,37 +160,112 @@ public class Drive1 extends OpMode {
             intakeMotor.setPower(intakeMotor.getPower() == 0 ? 0.9: 0);
             midtakeMotor.setPower(midtakeMotor.getPower() == 0 ? 0.6: 0);
         }
+        if (gamepad1.right_bumper) {
+
+        }
+
         //april tag stuff
         AprilTagWebcam aprilTagWebcam = new AprilTagWebcam();
             aprilTagWebcam.update();
+        boolean autoenabler = false;
+        //last direction drove left
+        boolean lddl = false;
+        //last direction drove right
+        boolean lddr = false;
 
-            //red april tag ids
-            int [] tagIdR = {0,1,2,3};
-            //blue april tag ids
-            int [] tagIdB = {42,33,44,45};
-        //actually not quite sure what this does, but it might be needed
-        AprilTagDetection id42 = aprilTagWebcam.getTagBySpecificId(41);
-        AprilTagDetection id43 = aprilTagWebcam.getTagBySpecificId(40);
-        AprilTagDetection id44 = aprilTagWebcam.getTagBySpecificId(39);
-        AprilTagDetection id45 = aprilTagWebcam.getTagBySpecificId(38);
-        //Simplifying red Ids
-        AprilTagDetection id0 = aprilTagWebcam.getTagBySpecificId(0);
-        AprilTagDetection id1 = aprilTagWebcam.getTagBySpecificId(1);
-        AprilTagDetection id2 = aprilTagWebcam.getTagBySpecificId(2);
-        AprilTagDetection id3 = aprilTagWebcam.getTagBySpecificId(3);
+        //last direction turned left
+        boolean ldtl = false;
+        //last direction turned right
+        boolean ldtr = false;
 
-        while (aprilTagWebcam.getDetectedTags() == null) {
-           //not coding until we figure out motor or servo
-           // put code to spin
+        //turn turret system I hope
+        if (gamepad1.right_bumper) {
+        ldtr = true;
+        ldtl = false;
         }
-        if (  aprilTagWebcam.getDetectedTags().contains(id3) ){
-            //put code to stop motor
-    }
+
+        if (gamepad1.left_bumper) {
+            ldtl = true;
+            ldtr = false;
+        }
+        //need to test
+        if (gamepad1.right_stick_x > 0){
+            lddr = true;
+            lddl = false;
+        }
+        //need to test
+        if (gamepad1.right_stick_x < 0){
+            lddl = true;
+            lddr = false;
+        }
+
+        if (aprilTagWebcam.getDetectedTags() != null){
+            autoenabler = true;
+        }
+
+
+            //red april tag ids(idk if these are correct ngl)
+            int [] tagIdR = {0,1,2,3};
+            //blue april tag ids (idk if these are correct ngl)
+            int [] tagIdB = {42,43,44,45};
+        //actually not quite sure what this does, but it might be needed
+        AprilTagDetection id38 = aprilTagWebcam.getTagBySpecificId(38);
+        AprilTagDetection id39 = aprilTagWebcam.getTagBySpecificId(39);
+        AprilTagDetection id40 = aprilTagWebcam.getTagBySpecificId(40);
+        AprilTagDetection id41 = aprilTagWebcam.getTagBySpecificId(41);
+        AprilTagDetection id42 = aprilTagWebcam.getTagBySpecificId(42);
+        AprilTagDetection id43 = aprilTagWebcam.getTagBySpecificId(43);
+        AprilTagDetection id44 = aprilTagWebcam.getTagBySpecificId(44);
+        AprilTagDetection id45 = aprilTagWebcam.getTagBySpecificId(45);
+        //Simplifying red Ids
+        AprilTagDetection id30 = aprilTagWebcam.getTagBySpecificId(30);
+        AprilTagDetection id31 = aprilTagWebcam.getTagBySpecificId(31);
+        AprilTagDetection id22 = aprilTagWebcam.getTagBySpecificId(32);
+        AprilTagDetection id33 = aprilTagWebcam.getTagBySpecificId(33);
+        AprilTagDetection id34 = aprilTagWebcam.getTagBySpecificId(34);
+        AprilTagDetection id35 = aprilTagWebcam.getTagBySpecificId(35);
+        AprilTagDetection id26 = aprilTagWebcam.getTagBySpecificId(36);
+        AprilTagDetection id37 = aprilTagWebcam.getTagBySpecificId(37);
+
+        //This is used so we can turn off the camera as a just incase
+//        boolean tagcam = true;
+
+
+        while (aprilTagWebcam.getDetectedTags() == null && autoenabler) {
+            autoTurret.setPosition(Servo_Position);
+            if ((ldtr) || (lddr))
+            {
+                Servo_Position -= 5;
+            }
+            if ((ldtl) || (lddl)){
+                Servo_Position += 5;
+        }
+
+
+
+
+
+
+
+        /*if (  aprilTagWebcam.getDetectedTags().contains(id3) ) {
+            /*use distance to correct direction
+            ex,  if prev distance - current distance < 5{
+            (prolly an if statment to decide which operation to use)
+            direction -=/+= 0.1
+            autoTurret.setdirection(direction)
+
+            }
+
+             */
+
+
+
 
         //Perform reverse intake for robot
         if (gamepad2.bWasPressed()) {
             intakeMotor.setPower(intakeMotor.getPower() == 0 ? -0.5: 0);
             midtakeMotor.setPower(midtakeMotor.getPower() == 0 ? -0.6: 0);
+            }
         }
     }
 }
