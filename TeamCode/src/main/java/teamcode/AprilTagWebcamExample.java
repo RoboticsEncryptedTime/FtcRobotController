@@ -2,11 +2,12 @@ package teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import teamcode.mechanisms.AprilTagWebcam;
 
-@Autonomous
+@TeleOp
 public class AprilTagWebcamExample extends OpMode {
     AprilTagWebcam aprilTagWebcam = new AprilTagWebcam();
 
